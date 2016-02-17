@@ -24,7 +24,15 @@ float** case_1_randgen (int seed, int v)
 
 int main(int argc, char *argv[]) {
 	if (argc == 3)
-		float** arr = case_1_randgen(atoi(argv[1]), atoi(argv[2]));
+	{
+		int seed = atoi(argv[1]);
+		int v = atoi(argv[2]);
+		float** arr = malloc(sizeof(float*));
+		arr = case_1_randgen(seed, v);
+		for (int i = 0; i < v; i++)
+			for (int j = 0 ; j < i ; j++)
+				printf("%f\n", arr[i][j]);
+	}
 	else
 		printf("Yo! You suck!\n");
 }
