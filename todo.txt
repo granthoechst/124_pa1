@@ -5,6 +5,31 @@ Prim's! WAHOO!
 
 Generate random trees
 
+	Let's think about generating random trees:
+
+	array of arrays making up an ADJACENCY MATRIX where
+	each element of our outer array contains an array of length 'i',
+	where i is the index of the outer array.
+
+	this array stores information about the edge weights between two vertices
+
+	weight(a,b) where a, b are within V = array[max(a,b)][min(a,b)]
+
+
+
+	srand(time);
+
+	ptr *array = malloc(V * 4 bytes);
+
+	for (int i = 1 ; i < V ; i++)
+	{
+		array[i] = malloc(i * size_of(float));
+		for (int j = 0 ; j < i ; j++)
+			array[i][j] = ((float) rand()) / ((float) RAND_MAX) ;
+	}
+
+	
+
 Implement algorithm
 
 Test on small numbers - find function k to start to optimize
