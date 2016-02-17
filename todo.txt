@@ -1,7 +1,7 @@
 TO DO List:
 
 
-Decide on Kruskal's vs. Prim's
+Prim's! WAHOO!
 
 Generate random trees
 
