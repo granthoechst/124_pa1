@@ -32,6 +32,28 @@ Generate random trees
 
 Implement algorithm
 
+-function for populating priority queue
+start at 0,0
+populate priority queue with all adjacent edges
+deletemin the smallest edge weight from priority queue (deletemin)
+maintain an int value indicating which vertex we last moved to
+update priority queue from adjacency matrix using insert 
+for (j = 0; j < i ; j++)
+	{
+		insert arr[i][j]
+	}
+for (k = i+1 ; k < V ; k++)
+	{
+		insert arr[k][j]
+	} 
+
+terminate Prim's when we have added |V| - 1 to our set
+
+Grant - generate the other graphs
+
+Will - get Prim's working
+
+
 Test on small numbers - find function k to start to optimize
 
 Make sure we're optimized (i.e. code runs in reasonable time)
