@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 // for accessing specific elements in our tree
-#define LEFT(x) = (2 * x)
-#define RIGHT(x) = (2 * (x) + 1)
-#define PARENT(x) = (2 / (x))
+#define LEFT(x) (2 * x)
+#define RIGHT(x) (2 * (x) + 1)
+#define PARENT(x) (2 / (x))
 // for use in the '0' place in our array
 # define UINT_MAX  4294967295U
 
@@ -13,7 +13,7 @@ typedef struct Priqu {
     size_t size;
     size_t capacity;
     float *weights;
-};
+} Priqu ;
 
 Priqu *initialize(size_t capacity) {
     Priqu *queue = malloc(sizeof(Priqu));
@@ -21,6 +21,36 @@ Priqu *initialize(size_t capacity) {
     queue->size = 0;
     queue->weights[0] = UINT_MAX;
     return (queue);
+};
+
+// to organize our heap
+void min_heapify(Priqu *q, size_t index) {
+    float temp;
+    size_t left_index = LEFT(index);
+    size_t right_index = RIGHT(index);
+    size_t large;
+    
+    if(left_index <= q->size && q->weights[left_index] > q->weights[index])
+    {
+        large = left_index;
+    }
+    else
+    {
+        large = index;
+    }
+
+    if (right_index <= q->size && q->weights[right_index] > q->weights[large])
+    {
+        large = right_index;
+    }
+
+    if (large != index)
+    {
+        temp = q->weights[large];
+        q->weights[large] = q->weights[index];
+        q->weights[index] = temp;
+        min_heapify(q, large);
+    }
 };
 
 // adding elements to the queue, takes in the queue and the value
@@ -50,14 +80,14 @@ void insert(Priqu *q, float *val) {
 };
 
 // return a pointer to the edge
-float deletemin {
+float deletemin(Priqu *q) {
     // this will be the return value
     float edge;
     // can't do anything if nothing is there
     if (q->size < 1)
     {
         printf("Nothing in the priority queue!\n");
-        return NULL;
+        return 0;
     }
     // selecting the edge at the beginning
     edge = q->weights[1];
@@ -68,34 +98,4 @@ float deletemin {
     // now need to reheapify
     min_heapify(q, 1);
     return edge;
-};
-
-// to organize our heap
-void min_heapify(Priqu *q, size_t index) {
-    float temp;
-    size_t left_index = LEFT(index);
-    size_t right_index = RIGHT(index);
-    size_t large;
-    
-    if(left_index <= q-size && q->weights[left_index] > q->weights[index])
-    {
-        large = left_index;
-    }
-    else
-    {
-        large = index;
-    }
-
-    if (right_index <= q-size && q->weights[right_index] > q->weights[large])
-    {
-        large = right_index;
-    }
-
-    if (large != index)
-    {
-        temp = q->weights[large];
-        q->weights[large] = q->weights[index];
-        q->weights[index] = temp;
-        min_heapify[q, large];
-    }
 };
