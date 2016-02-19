@@ -59,6 +59,79 @@ tuple_point* case_2d_randgen (int seed, int v)
     return array;
 }
 
+typedef struct triple_point {
+    float x;
+    float y;
+    float z;
+    float* edges;
+} triple_point;
+
+float euc_dist_3d (triple_point a, triple_point b) {
+    return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2) + 
+                pow((a.z - b.z), 2));
+}
+
+triple_point* case_3d_randgen (int seed, int v)
+{
+    if (seed == 0)
+        srand(time(NULL));
+    else
+        srand(seed);
+
+    triple_point* array = malloc(v * sizeof(triple_point));
+
+    for (int i = 1 ; i < v ; i++)
+    {
+        array[i].x = (float) rand() / (float) RAND_MAX;
+        array[i].y = (float) rand() / (float) RAND_MAX;
+        array[i].z = (float) rand() / (float) RAND_MAX;
+        array[i].edges = malloc(i * sizeof(float));
+        for (int j = 0 ; j < i ; j++)
+            array[i].edges[j] = euc_dist_3d(array[i], array[j]);
+    }
+
+    return array;
+}
+
+typedef struct quad_point {
+    float x;
+    float y;
+    float z;
+    float w;
+    float* edges;
+} quad_point;
+
+float euc_dist_4d (quad_point a, quad_point b) {
+    return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2) + 
+                pow((a.z - b.z), 2) + pow((a.w - b.w), 2));
+}
+
+quad_point* case_4d_randgen (int seed, int v)
+{
+    if (seed == 0)
+        srand(time(NULL));
+    else
+        srand(seed);
+
+    quad_point* array = malloc(v * sizeof(quad_point));
+
+    for (int i = 1 ; i < v ; i++)
+    {
+        array[i].x = (float) rand() / (float) RAND_MAX;
+        array[i].y = (float) rand() / (float) RAND_MAX;
+        array[i].z = (float) rand() / (float) RAND_MAX;
+        array[i].w = (float) rand() / (float) RAND_MAX;
+        array[i].edges = malloc(i * sizeof(float));
+        for (int j = 0 ; j < i ; j++)
+            array[i].edges[j] = euc_dist_4d(array[i], array[j]);
+    }
+
+    return array;
+}
+
+
+
+
 size_t todo;
 
 // to organize our heap
@@ -273,14 +346,11 @@ int main(int argc, char *argv[]) {
 
             tuple_point* arr2 = malloc(sizeof(tuple_point*));
             arr2 = case_2d_randgen(seed, v);
-            for (int i = 0; i < v; i++)
+            for (int i = 1; i < v; i++)
                 for (int j = 0 ; j < i ; j++)
                     printf("%f\n", arr2[i].edges[j]);
 
-            printf("done generating\n");
-
             boxes del;
-            
 
             float *final = malloc(v * sizeof(float));
             int size = 0;
@@ -360,6 +430,196 @@ int main(int argc, char *argv[]) {
                 free(arr2[i].edges);
             }
             free(arr2);
+            free(final);
+        }
+
+        if (atoi(argv[3]) == 3)
+        {   
+            int seed = atoi(argv[1]);
+
+            int v = atoi(argv[2]);
+
+            triple_point* arr3 = malloc(sizeof(triple_point*));
+            arr3 = case_3d_randgen(seed, v);
+            for (int i = 1; i < v; i++)
+                for (int j = 0 ; j < i ; j++)
+                    printf("%f\n", arr3[i].edges[j]);
+
+            boxes del;
+
+            float *final = malloc(v * sizeof(float));
+            int size = 0;
+
+            int** arrayvis = malloc(v * sizeof(int*));
+                for (int i = 1; i < v; i++)
+                {
+                    arrayvis[i] = malloc(i * sizeof(int));
+                    for (int j = 0 ; j < i ; j++)
+                        arrayvis[i][j] = 1;
+                }
+
+            Priqu *q = malloc(sizeof(Priqu));
+
+            q->weights = malloc((v * v / 2) * sizeof(boxes));
+            q->capacity = v * v;
+            q->size = 0;
+            // initial value isn't used, assign it -1 so no value is ever smaller
+            q->weights[0].value = -1;
+
+            int row = 0;
+            int col = 0;
+
+            for (int i = row + 1 ; i < v ; i++)
+                {
+                    if (arrayvis[i][row] == 1)
+                    {
+                        insert(q, arr3[i].edges[row], i, row);
+                        arrayvis[i][row] = 0;
+                    }
+                }
+
+            while (size < v - 1)
+            {
+                del = deletemin(q);
+                final[size] = del.value;
+                size++;
+                row = del.row;
+                col = del.col;
+
+                for (int i = row + 1 ; i < v ; i++)
+                {
+                    if (arrayvis[i][row] == 1)
+                    {
+                        insert(q, arr3[i].edges[row], i, row);
+                        arrayvis[i][row] = 0;
+                    }
+                }
+
+                for (int j = col ; j < row ; j++)
+                {
+                    if (arrayvis[row][j] == 1)
+                    {
+                        insert(q, arr3[row].edges[j], row, j);
+                        arrayvis[row][j] = 0;
+                    }
+                }
+            }
+
+            printf("our MST: ");
+            for(int k = 0 ; k < v - 1 ; k ++)
+            {
+                printf("%f | ", final[k]);
+            }
+            printf("\n");
+
+            free(q->weights);
+            free(q);
+            for (int i = 0; i < v; i++)
+            {
+                free(arrayvis[i]);
+            }
+            free(arrayvis);
+            //figure out how to free this
+            // for (int i = 0; i < v; i++)
+            // {
+            //     free(arr[i]);
+            // }
+            free(arr3);
+            free(final);
+        }
+
+        if (atoi(argv[3]) == 4)
+        {   
+            int seed = atoi(argv[1]);
+
+            int v = atoi(argv[2]);
+
+            quad_point* arr4 = malloc(sizeof(quad_point*));
+            arr4 = case_4d_randgen(seed, v);
+            for (int i = 0; i < v; i++)
+                for (int j = 0 ; j < i ; j++)
+                    printf("%f\n", arr4[i].edges[j]);
+
+            boxes del;
+
+            float *final = malloc(v * sizeof(float));
+            int size = 0;
+
+            int** arrayvis = malloc(v * sizeof(int*));
+                for (int i = 1; i < v; i++)
+                {
+                    arrayvis[i] = malloc(i * sizeof(int));
+                    for (int j = 0 ; j < i ; j++)
+                        arrayvis[i][j] = 1;
+                }
+
+            Priqu *q = malloc(sizeof(Priqu));
+
+            q->weights = malloc((v * v / 2) * sizeof(boxes));
+            q->capacity = v * v;
+            q->size = 0;
+            // initial value isn't used, assign it -1 so no value is ever smaller
+            q->weights[0].value = -1;
+
+            int row = 0;
+            int col = 0;
+
+            for (int i = row + 1 ; i < v ; i++)
+                {
+                    if (arrayvis[i][row] == 1)
+                    {
+                        insert(q, arr4[i].edges[row], i, row);
+                        arrayvis[i][row] = 0;
+                    }
+                }
+
+            while (size < v - 1)
+            {
+                del = deletemin(q);
+                final[size] = del.value;
+                size++;
+                row = del.row;
+                col = del.col;
+
+                for (int i = row + 1 ; i < v ; i++)
+                {
+                    if (arrayvis[i][row] == 1)
+                    {
+                        insert(q, arr4[i].edges[row], i, row);
+                        arrayvis[i][row] = 0;
+                    }
+                }
+
+                for (int j = col ; j < row ; j++)
+                {
+                    if (arrayvis[row][j] == 1)
+                    {
+                        insert(q, arr4[row].edges[j], row, j);
+                        arrayvis[row][j] = 0;
+                    }
+                }
+            }
+
+            printf("our MST: ");
+            for(int k = 0 ; k < v - 1 ; k ++)
+            {
+                printf("%f | ", final[k]);
+            }
+            printf("\n");
+
+            free(q->weights);
+            free(q);
+            for (int i = 0; i < v; i++)
+            {
+                free(arrayvis[i]);
+            }
+            free(arrayvis);
+            //figure out how to free this
+            // for (int i = 0; i < v; i++)
+            // {
+            //     free(arr[i]);
+            // }
+            free(arr4);
             free(final);
         }
     }
