@@ -127,7 +127,7 @@ quad_point* case_4d_randgen (int seed, int v)
 int main(int argc, char *argv[]) {
 	if (argc == 3)
 	{
-		printf("Case 1:\n\n");
+		//printf("Case 1:\n\n");
 		int seed = atoi(argv[1]);
 		int v = atoi(argv[2]);
 		float** arr = malloc(sizeof(float*));
@@ -136,12 +136,16 @@ int main(int argc, char *argv[]) {
 			for (int j = 0 ; j < i ; j++)
 				printf("%f\n", arr[i][j]);
 
+		free(arr);
+
 		printf("\nCase 2:\n\n");
 		tuple_point* arr2 = malloc(sizeof(tuple_point*));
 		arr2 = case_2d_randgen(seed, v);
-		for (int i = 0; i < v; i++)
-			for (int j = 0 ; j < i ; j++)
-				printf("%f\n", arr2[i].edges[j]);
+		for (int k = 1; k < v; k++)
+			for (int l = 0 ; l < k ; l++)
+				printf("%f\n", arr2[k].edges[l]);
+
+		free(arr2);
 
 		printf("\nCase 3:\n\n");
 		triple_point* arr3 = malloc(sizeof(triple_point*));
