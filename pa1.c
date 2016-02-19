@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 		int v = atoi(argv[2]);
 		float** arr = malloc(sizeof(float*));
 		arr = case_1_randgen(seed, v);
-		for (int i = 0; i < v; i++)
+		for (int i = 1; i < v; i++)
 			for (int j = 0 ; j < i ; j++)
 				printf("%f\n", arr[i][j]);
 	}
