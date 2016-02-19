@@ -268,6 +268,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        printf("our MST: ");
         for(int k = 0 ; k < v - 1 ; k ++)
         {
             printf("%f | ", final[k]);
