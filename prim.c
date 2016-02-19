@@ -82,6 +82,9 @@ void insert(Priqu *q, float val, int ro, int co) {
     q->weights[q->size].row = ro;
     q->weights[q->size].col = co;
     i = q->size;
+
+     sort(q);
+
     // move up the value while it's smaller than its parent
     // while(q->weights[i].value <= q->weights[PARENT(i)].value)
     // {
@@ -89,13 +92,6 @@ void insert(Priqu *q, float val, int ro, int co) {
     //     q->weights[i] = q->weights[PARENT(i)];
     //     q->weights[PARENT(i)] = temp;
     //     i = PARENT(i);
-    // }
-
-    sort(q);
-
-    // for(i = 1 ; i < q->size + 1 ; i ++)
-    // {
-    //     printf("pq nums: %f", q->weights[i].value);
     // }
 };
 
@@ -139,46 +135,7 @@ float** case_1_randgen (int seed, int v)
     }
 
     return array;
-
-    // Priqu *queue = malloc(sizeof(Priqu));
-    // // maximum size of edge weights
-    // queue->weights = malloc(v * v * sizeof(boxes));
-    // queue->capacity = v * v;
-    // queue->size = 0;
-    // // initial value isn't used, assign it -1 so no value is ever smaller
-    // queue->weights[0].value = -1;
-
-    // for (int i = 0 ; i < v*v ; i++)
-    // {
-    //     insert(queue, ((float) rand() / (float) RAND_MAX));
-    // }
-
-    // return (queue);
-
 }
-
-// int main(int argc, char *argv[]) {
-//     if (argc == 3)
-//     {
-//         float del;
-//         int seed = atoi(argv[1]);
-//         int v = atoi(argv[2]);
-//         // will need to adjust this when prim's is really working
-//         float *final = malloc(v * v * sizeof(float));
-//         int size = 0;
-//         Priqu *q = malloc(sizeof(Priqu));
-//         q = case_1_randgen(seed, v);
-//         for (int i = 0; i < v*v; i++)
-//         {
-//             del = deletemin(q);
-//             printf("%f\n", del);
-//             final[size] = del;
-//             size++;
-//         }
-//     }
-//     else
-//         printf("Yo! You suck!\n");
-// }
 
 // for actual prim's
 int main(int argc, char *argv[]) {
@@ -188,7 +145,7 @@ int main(int argc, char *argv[]) {
         int seed = atoi(argv[1]);
 
         int v = atoi(argv[2]);
-        // will need to adjust this when prim's is really working
+
         float *final = malloc(v * sizeof(float));
         int size = 0;
 
@@ -217,16 +174,12 @@ int main(int argc, char *argv[]) {
         int row = 0;
         int col = 0;
 
-        // printf("made it here\n");
-
         for (int i = row + 1 ; i < v ; i++)
             {
                 if (arrayvis[i][row] == 1)
                 {
-                    // printf("initial for loop\n");
                     insert(q, arr[i][row], i, row);
                     arrayvis[i][row] = 0;
-                    // printf("inserting %f\n", arr[i][row]);
                 }
             }
 
@@ -234,36 +187,25 @@ int main(int argc, char *argv[]) {
         {
             del = deletemin(q);
             final[size] = del.value;
-            // printf("one number is %f\n", final[size]);
             size++;
             row = del.row;
-            // printf("row at next insert is %i\n", row);
             col = del.col;
-            // printf("col at next insert is %i\n", col);
 
             for (int i = row + 1 ; i < v ; i++)
             {
                 if (arrayvis[i][row] == 1)
                 {
-                    // printf("starting first for loop\n");
                     insert(q, arr[i][row], i, row);
                     arrayvis[i][row] = 0;
-                    // printf("inserting %f\n", arr[i][row]);
                 }
             }
-
-            // printf("between inserts\n");
-            // printf("row is %i\n", row);
-
 
             for (int j = col ; j < row ; j++)
             {
                 if (arrayvis[row][j] == 1)
                 {
-                    // printf("staring second for loop\n");
                     insert(q, arr[row][j], row, j);
                     arrayvis[row][j] = 0;
-                    // printf("insert %f\n",arr[row][j]);
                 }
             }
         }
