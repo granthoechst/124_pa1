@@ -67,7 +67,6 @@ void sort(Priqu *q)
 // adding elements to the queue, takes in the queue and the value
 void insert(Priqu *q, float val, int ro, int co) {
     // need a variable of size_t and a pointer
-    size_t i;
     boxes temp;
     // don't operate if our queue is full
     if (q->size + 1 > q->capacity)
@@ -81,9 +80,9 @@ void insert(Priqu *q, float val, int ro, int co) {
     q->weights[q->size].value = val;
     q->weights[q->size].row = ro;
     q->weights[q->size].col = co;
-    i = q->size;
+    
 
-     sort(q);
+    sort(q);
 
     // move up the value while it's smaller than its parent
     // while(q->weights[i].value <= q->weights[PARENT(i)].value)
@@ -165,7 +164,7 @@ int main(int argc, char *argv[]) {
 
         Priqu *q = malloc(sizeof(Priqu));
 
-        q->weights = malloc(v * v * sizeof(boxes));
+        q->weights = malloc((v * v / 2) * sizeof(boxes));
         q->capacity = v * v;
         q->size = 0;
         // initial value isn't used, assign it -1 so no value is ever smaller
@@ -215,6 +214,21 @@ int main(int argc, char *argv[]) {
         {
             printf("%f | ", final[k]);
         }
+        printf("\n");
+
+        free(q->weights);
+        free(q);
+        for (int i = 0; i < v; i++)
+        {
+            free(arrayvis[i]);
+        }
+        free(arrayvis);
+        for (int i = 0; i < v; i++)
+        {
+            free(arr[i]);
+        }
+        free(arr);
+        free(final);
     }
     else
         printf("Yo! You suck!\n");
