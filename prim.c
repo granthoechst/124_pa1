@@ -257,10 +257,10 @@ int main(int argc, char *argv[]) {
             }
             free(arrayvis);
             //figure out how to free this
-            // for (int i = 0; i < v; i++)
-            // {
-            //     free(arr[i]);
-            // }
+            for (int i = 0; i < v; i++)
+            {
+                free(arr[i]);
+            }
             free(arr);
             free(final);
         }
@@ -355,10 +355,10 @@ int main(int argc, char *argv[]) {
             }
             free(arrayvis);
             //figure out how to free this
-            // for (int i = 0; i < v; i++)
-            // {
-            //     free(arr[i]);
-            // }
+            for (int i = 0; i < v; i++)
+            {
+                free(arr2[i].edges);
+            }
             free(arr2);
             free(final);
         }
