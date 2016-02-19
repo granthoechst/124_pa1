@@ -330,7 +330,7 @@ int main(int argc, char *argv[]) {
             }
             free(arrayvis);
             //figure out how to free this
-            for (int i = 0; i < v; i++)
+            for (int i = 1; i < v; i++)
             {
                 free(arr[i]);
             }
@@ -425,7 +425,7 @@ int main(int argc, char *argv[]) {
             }
             free(arrayvis);
             //figure out how to free this
-            for (int i = 0; i < v; i++)
+            for (int i = 1; i < v; i++)
             {
                 free(arr2[i].edges);
             }
@@ -519,11 +519,11 @@ int main(int argc, char *argv[]) {
                 free(arrayvis[i]);
             }
             free(arrayvis);
-            //figure out how to free this
-            // for (int i = 0; i < v; i++)
-            // {
-            //     free(arr[i]);
-            // }
+
+            for (int i = 1; i < v; i++)
+            {
+                 free(arr3[i].edges);
+            }
             free(arr3);
             free(final);
         }
@@ -614,11 +614,11 @@ int main(int argc, char *argv[]) {
                 free(arrayvis[i]);
             }
             free(arrayvis);
-            //figure out how to free this
-            // for (int i = 0; i < v; i++)
-            // {
-            //     free(arr[i]);
-            // }
+            
+            for (int i = 1; i < v; i++)
+            {
+                free(arr4[i].edges);
+            }
             free(arr4);
             free(final);
         }

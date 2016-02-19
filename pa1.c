@@ -141,25 +141,39 @@ int main(int argc, char *argv[]) {
 		printf("\nCase 2:\n\n");
 		tuple_point* arr2 = malloc(sizeof(tuple_point*));
 		arr2 = case_2d_randgen(seed, v);
-		for (int k = 1; k < v; k++)
-			for (int l = 0 ; l < k ; l++)
-				printf("%f\n", arr2[k].edges[l]);
+		for (int i = 1; i < v; i++)
+			for (int j = 0 ; j < i ; j++)
+				printf("%f\n", arr2[i].edges[j]);
 
+		for (int i = 1; i < v; i++)
+        {
+            free(arr2[i].edges);
+        }
 		free(arr2);
 
 		printf("\nCase 3:\n\n");
 		triple_point* arr3 = malloc(sizeof(triple_point*));
 		arr3 = case_3d_randgen(seed, v);
-		for (int i = 0; i < v; i++)
+		for (int i = 1; i < v; i++)
 			for (int j = 0 ; j < i ; j++)
 				printf("%f\n", arr3[i].edges[j]);
+		for (int i = 1; i < v; i++)
+        {
+            free(arr3[i].edges);
+        }
+		free(arr3);
 
 		printf("\nCase 4:\n\n");
 		quad_point* arr4 = malloc(sizeof(quad_point*));
 		arr4 = case_4d_randgen(seed, v);
-		for (int i = 0; i < v; i++)
+		for (int i = 1; i < v; i++)
 			for (int j = 0 ; j < i ; j++)
 				printf("%f\n", arr4[i].edges[j]);
+		for (int i = 1; i < v; i++)
+        {
+            free(arr4[i].edges);
+        }
+		free(arr4);
 	}
 	else
 		printf("Yo! You suck!\n");
