@@ -5,8 +5,6 @@
 #define LEFT(x) (2 * x)
 #define RIGHT(x) (2 * (x) + 1)
 #define PARENT(x) (2 / (x))
-// for use in the '0' place in our array
-# define UINT_MAX  4294967295U
 
 // creating my priority queue struct
 typedef struct Priqu {
@@ -15,11 +13,16 @@ typedef struct Priqu {
     float *weights;
 } Priqu ;
 
+// to create the initial, empty priority queue
 Priqu *initialize(size_t capacity) {
+    // malloc for the pointer
     Priqu *queue = malloc(sizeof(Priqu));
+    // maximum size of edge weights
     queue->weights = malloc(capacity * sizeof(float));
+    queue->capacity = capacity;
     queue->size = 0;
-    queue->weights[0] = UINT_MAX;
+    // initial value isn't used, assign it -1 so no value is ever smaller
+    queue->weights[0] = -1;
     return (queue);
 };
 
@@ -54,7 +57,7 @@ void min_heapify(Priqu *q, size_t index) {
 };
 
 // adding elements to the queue, takes in the queue and the value
-void insert(Priqu *q, float *val) {
+void insert(Priqu *q, float val) {
     // need a variable of size_t and a pointer
     size_t i;
     float temp;
@@ -67,7 +70,7 @@ void insert(Priqu *q, float *val) {
     // increment the size
     q->size++;
     // put the new value at the end of the queue
-    q->weights[q->size] = *val;
+    q->weights[q->size] = val;
     i = q->size;
     // move up the value while it's smaller than its parent
     while(q->weights[i] <= q->weights[PARENT(i)])
