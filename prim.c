@@ -333,12 +333,17 @@ int main(int argc, char *argv[]) {
                 }
             }
 
+            float sum = 0;
+
             printf("our MST: ");
             for(int k = 0 ; k < v - 1 ; k ++)
             {
+                sum += final[k];
                 printf("%f | ", final[k]);
             }
             printf("\n");
+
+            printf("our average weight: %f\n", sum);
 
             free(q->weights);
             free(q);
@@ -428,12 +433,17 @@ int main(int argc, char *argv[]) {
                 }
             }
 
+            float sum = 0;
+
             printf("our MST: ");
             for(int k = 0 ; k < v - 1 ; k ++)
             {
+                sum += final[k];
                 printf("%f | ", final[k]);
             }
             printf("\n");
+
+            printf("our average weight: %f\n", sum;
 
             free(q->weights);
             free(q);
@@ -523,12 +533,17 @@ int main(int argc, char *argv[]) {
                 }
             }
 
+            float sum = 0;
+
             printf("our MST: ");
             for(int k = 0 ; k < v - 1 ; k ++)
             {
+                sum += final[k];
                 printf("%f | ", final[k]);
             }
             printf("\n");
+
+            printf("our average weight: %f\n", sum;
 
             free(q->weights);
             free(q);
@@ -618,12 +633,17 @@ int main(int argc, char *argv[]) {
                 }
             }
 
+            float sum = 0;
+
             printf("our MST: ");
             for(int k = 0 ; k < v - 1 ; k ++)
             {
+                sum += final[k];
                 printf("%f | ", final[k]);
             }
             printf("\n");
+
+            printf("our average weight: %f\n", sum;
 
             free(q->weights);
             free(q);
