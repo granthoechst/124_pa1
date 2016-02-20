@@ -300,7 +300,7 @@ int main(int argc, char *argv[]) {
             for (int i = row + 1 ; i < v ; i++)
                 {
                     if ((arrayvis[i][row] == 1) 
-                        && arr[i][row] < (10.0/(float) v)
+                        && arr[i][row] < (20.0/(float) v)
                         )
                     {
                         insert(q, arr[i][row], i, row);
@@ -319,7 +319,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                 {
                     if (arrayvis[i][row] == 1
-                        && arr[i][row] < (10.0/(float) v)
+                        && arr[i][row] < (20.0/(float) v)
                         )
                     {
                         insert(q, arr[i][row], i, row);
@@ -330,7 +330,7 @@ int main(int argc, char *argv[]) {
                 for (int j = col ; j < row ; j++)
                 {
                     if (arrayvis[row][j] == 1
-                        && arr[row][j] < (10.0/(float) v)
+                        && arr[row][j] < (20.0/(float) v)
                         )
                     {
                         insert(q, arr[row][j], row, j);
