@@ -443,7 +443,7 @@ int main(int argc, char *argv[]) {
             }
             printf("\n");
 
-            printf("our average weight: %f\n", sum;
+            printf("our average weight: %f\n", sum);
 
             free(q->weights);
             free(q);
@@ -543,7 +543,7 @@ int main(int argc, char *argv[]) {
             }
             printf("\n");
 
-            printf("our average weight: %f\n", sum;
+            printf("our average weight: %f\n", sum);
 
             free(q->weights);
             free(q);
@@ -643,7 +643,7 @@ int main(int argc, char *argv[]) {
             }
             printf("\n");
 
-            printf("our average weight: %f\n", sum;
+            printf("our average weight: %f\n", sum);
 
             free(q->weights);
             free(q);
