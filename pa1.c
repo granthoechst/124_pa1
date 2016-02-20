@@ -67,6 +67,10 @@ tuple_point* case_2d_randgen (int seed, int v)
 
 	tuple_point* array = malloc(v * sizeof(tuple_point));
 
+	array[0].x = (float) rand() / (float) RAND_MAX;
+	array[0].y = (float) rand() / (float) RAND_MAX;
+	array[0].edges = NULL;
+
 	for (int i = 1 ; i < v ; i++)
 	{
 		array[i].x = (float) rand() / (float) RAND_MAX;
@@ -87,6 +91,11 @@ triple_point* case_3d_randgen (int seed, int v)
 		srand(seed);
 
 	triple_point* array = malloc(v * sizeof(triple_point));
+
+	array[0].x = (float) rand() / (float) RAND_MAX;
+	array[0].y = (float) rand() / (float) RAND_MAX;
+	array[0].z = (float) rand() / (float) RAND_MAX;
+	array[0].edges = NULL;
 
 	for (int i = 1 ; i < v ; i++)
 	{
@@ -109,6 +118,12 @@ quad_point* case_4d_randgen (int seed, int v)
 		srand(seed);
 
 	quad_point* array = malloc(v * sizeof(quad_point));
+
+	array[0].x = (float) rand() / (float) RAND_MAX;
+	array[0].y = (float) rand() / (float) RAND_MAX;
+	array[0].z = (float) rand() / (float) RAND_MAX;
+	array[0].w = (float) rand() / (float) RAND_MAX;
+	array[0].edges = NULL;
 
 	for (int i = 1 ; i < v ; i++)
 	{
