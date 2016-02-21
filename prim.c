@@ -239,10 +239,10 @@ boxes deletemin(Priqu *q) {
 
 float** case_1_randgen (int seed, int v)
 {
-    if (seed == 0)
-        srand(time(NULL));
-    else
-        srand(seed);
+    // if (seed == 0)
+    //     srand(time(NULL));
+    // else
+    //     srand(seed);
 
     float** array = malloc(v * sizeof(float*));
 
@@ -260,114 +260,156 @@ float** case_1_randgen (int seed, int v)
 
 // for actual prim's
 int main(int argc, char *argv[]) {
-    if (argc == 4)
+    if (argc == 5)
     {
-        if (atoi(argv[3]) == 1)
-        {   
-            boxes del;
+        // int num_trials = atoi(argv[3]);
+        // float *trial_weight = malloc(num_trials * sizeof(float));
+
+        if (atoi(argv[4]) == 1)
+        {  
+            // testing, testing
             int seed = atoi(argv[1]);
+            if (seed == 0)
+            srand(time(NULL));
+            else
+            srand(seed);
 
-            int v = atoi(argv[2]);
 
-            float *final = malloc(v * sizeof(float));
-            int size = 0;
+            int num_trials = atoi(argv[3]);
+            float *trial_weight = malloc(num_trials * sizeof(float));
 
-            float** arr = malloc(sizeof(float*));
-            arr = case_1_randgen(seed, v);
-            for (int i = 1; i < v; i++)
-                for (int j = 0 ; j < i ; j++)
-                    printf("%f\n", arr[i][j]);
-
-            int** arrayvis = malloc(v * sizeof(int*));
-                for (int i = 1; i < v; i++)
-                {
-                    arrayvis[i] = malloc(i * sizeof(int));
-                    for (int j = 0 ; j < i ; j++)
-                        arrayvis[i][j] = 1;
-                }
-
-            Priqu *q = malloc(sizeof(Priqu));
-
-            q->weights = malloc((v * v / 2) * sizeof(boxes));
-            q->capacity = v * v;
-            q->size = 0;
-            // initial value isn't used, assign it -1 so no value is ever smaller
-            q->weights[0].value = -1;
-
-            int row = 0;
-            int col = 0;
-
-            for (int i = row + 1 ; i < v ; i++)
-                {
-                    if ((arrayvis[i][row] == 1) 
-                        && arr[i][row] < (20.0/(float) v)
-                        )
-                    {
-                        insert(q, arr[i][row], i, row);
-                        arrayvis[i][row] = 0;
-                    }
-                }
-
-            while (size < v - 1)
+            for (int trials = 0 ; trials < num_trials ; trials++)
             {
-                del = deletemin(q);
-                final[size] = del.value;
-                size++;
-                row = del.row;
-                col = del.col;
+                // need the for loop to start here
+                boxes del;
+
+                // int seed = atoi(argv[1]);
+
+                int v = atoi(argv[2]);
+
+                float *final = malloc(v * sizeof(float));
+                int size = 0;
+
+                // need to figure out how to randgen this better
+                float** arr = malloc(sizeof(float*));
+                arr = case_1_randgen(seed, v);
+                for (int i = 1; i < v; i++)
+                    for (int j = 0 ; j < i ; j++)
+                        printf("%f\n", arr[i][j]);
+
+                int** arrayvis = malloc(v * sizeof(int*));
+                    for (int i = 1; i < v; i++)
+                    {
+                        arrayvis[i] = malloc(i * sizeof(int));
+                        for (int j = 0 ; j < i ; j++)
+                            arrayvis[i][j] = 1;
+                    }
+
+                Priqu *q = malloc(sizeof(Priqu));
+
+                q->weights = malloc((v * v / 2) * sizeof(boxes));
+                q->capacity = v * v;
+                q->size = 0;
+                // initial value isn't used, assign it -1 so no value is ever smaller
+                q->weights[0].value = -1;
+
+                int row = 0;
+                int col = 0;
 
                 for (int i = row + 1 ; i < v ; i++)
-                {
-                    if (arrayvis[i][row] == 1
-                        && arr[i][row] < (20.0/(float) v)
-                        )
                     {
-                        insert(q, arr[i][row], i, row);
-                        arrayvis[i][row] = 0;
+                        if ((arrayvis[i][row] == 1) 
+                            && arr[i][row] < (20.0/(float) v)
+                            )
+                        {
+                            insert(q, arr[i][row], i, row);
+                            arrayvis[i][row] = 0;
+                        }
+                    }
+
+                while (size < v - 1)
+                {
+                    del = deletemin(q);
+                    final[size] = del.value;
+                    size++;
+                    row = del.row;
+                    col = del.col;
+
+                    for (int i = row + 1 ; i < v ; i++)
+                    {
+                        if (arrayvis[i][row] == 1
+                            && arr[i][row] < (20.0/(float) v)
+                            )
+                        {
+                            insert(q, arr[i][row], i, row);
+                            arrayvis[i][row] = 0;
+                        }
+                    }
+
+                    for (int j = col ; j < row ; j++)
+                    {
+                        if (arrayvis[row][j] == 1
+                            && arr[row][j] < (20.0/(float) v)
+                            )
+                        {
+                            insert(q, arr[row][j], row, j);
+                            arrayvis[row][j] = 0;
+                        }
                     }
                 }
 
-                for (int j = col ; j < row ; j++)
+
+                float sum = 0;
+
+                printf("our MST: ");
+                for(int k = 0 ; k < v - 1 ; k ++)
                 {
-                    if (arrayvis[row][j] == 1
-                        && arr[row][j] < (20.0/(float) v)
-                        )
-                    {
-                        insert(q, arr[row][j], row, j);
-                        arrayvis[row][j] = 0;
-                    }
+                    sum += final[k];
+                    printf("%f | ", final[k]);
                 }
+                printf("\n");
+
+                printf("our tree weight: %f\n", sum);
+
+                trial_weight[trials] = sum;
+
+                free(q->weights);
+                free(q);
+
+                // problems freeing
+                for (int i = 1; i < v; i++)
+                {
+                    free(arrayvis[i]);
+                }
+                free(arrayvis);
+
+                // problems freeing
+                for (int i = 1; i < v; i++)
+                {
+                    free(arr[i]);
+                }
+                free(arr);
+                free(final);
+
+                // for loop should end here
             }
+            
+        
+            float total_weight;
 
-            float sum = 0;
-
-            printf("our MST: ");
-            for(int k = 0 ; k < v - 1 ; k ++)
+            for (int k = 0 ; k < num_trials ; k++)
             {
-                sum += final[k];
-                printf("%f | ", final[k]);
+                total_weight += trial_weight[k];
             }
-            printf("\n");
 
-            printf("our tree weight: %f\n", sum);
+            float average_weight = (total_weight / (float) num_trials);
 
-            free(q->weights);
-            free(q);
-            for (int i = 0; i < v; i++)
-            {
-                free(arrayvis[i]);
-            }
-            free(arrayvis);
-            //figure out how to free this
-            for (int i = 1; i < v; i++)
-            {
-                free(arr[i]);
-            }
-            free(arr);
-            free(final);
+            printf("our average weight is: %f\n", average_weight);
+
+            free(trial_weight);
         }
 
-        if (atoi(argv[3]) == 2)
+        if (atoi(argv[4]) == 2)
         {   
             int seed = atoi(argv[1]);
 
@@ -467,7 +509,7 @@ int main(int argc, char *argv[]) {
             free(final);
         }
 
-        if (atoi(argv[3]) == 3)
+        if (atoi(argv[4]) == 3)
         {   
             int seed = atoi(argv[1]);
 
@@ -567,7 +609,7 @@ int main(int argc, char *argv[]) {
             free(final);
         }
 
-        if (atoi(argv[3]) == 4)
+        if (atoi(argv[4]) == 4)
         {   
             int seed = atoi(argv[1]);
 
