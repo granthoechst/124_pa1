@@ -729,7 +729,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr4[i].edges[row] < pow(2.178, (-0.004 * (float) v)) + 0.4)
+                            && arr4[i].edges[row] < pow(2.178, (-0.008 * (float) v)) + 0.4)
                         {
                             insert(q, arr4[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -747,7 +747,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr4[i].edges[row] < pow(2.178, (-0.004 * (float) v)) + 0.4)
+                            && arr4[i].edges[row] < pow(2.178, (-0.008 * (float) v)) + 0.4)
                         {
                             insert(q, arr4[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -757,7 +757,7 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr4[row].edges[j] < pow(2.178, (-0.004 * (float) v)) + 0.4)
+                            && arr4[row].edges[j] < pow(2.178, (-0.008 * (float) v)) + 0.4)
                         {
                             insert(q, arr4[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
