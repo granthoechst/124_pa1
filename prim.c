@@ -23,8 +23,8 @@ typedef struct boxes {
 
 // creating my priority queue struct
 typedef struct Priqu {
-    size_t size;
-    size_t capacity;
+    long long size;
+    long long capacity;
     boxes *weights;
 } Priqu ;
 
@@ -293,10 +293,10 @@ int main(int argc, char *argv[]) {
                 // need to figure out how to randgen this better
                 float** arr = malloc(sizeof(float*));
                 arr = case_1_randgen(seed, v);
-                for (int i = 1; i < v; i++)
+                /*for (int i = 1; i < v; i++)
                     for (int j = 0 ; j < i ; j++)
                         printf("%f\n", arr[i][j]);
-
+*/
                 int** arrayvis = malloc(v * sizeof(int*));
                     for (int i = 1; i < v; i++)
                     {
@@ -308,7 +308,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
+                q->capacity = (long long) v * (long long) v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -429,10 +429,10 @@ int main(int argc, char *argv[]) {
 
                 tuple_point* arr2 = malloc(sizeof(tuple_point*));
                 arr2 = case_2d_randgen(seed, v);
-                for (int i = 1; i < v; i++)
+                /*for (int i = 1; i < v; i++)
                     for (int j = 0 ; j < i ; j++)
                         printf("%f\n", arr2[i].edges[j]);
-
+*/
                 boxes del;
 
                 float *final = malloc(v * sizeof(float));
@@ -449,7 +449,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
+                q->capacity = (long long) v * (long long) v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -564,10 +564,10 @@ int main(int argc, char *argv[]) {
 
                 triple_point* arr3 = malloc(sizeof(triple_point*));
                 arr3 = case_3d_randgen(seed, v);
-                for (int i = 1; i < v; i++)
+                /*for (int i = 1; i < v; i++)
                     for (int j = 0 ; j < i ; j++)
                         printf("%f\n", arr3[i].edges[j]);
-
+*/
                 boxes del;
 
                 float *final = malloc(v * sizeof(float));
@@ -584,7 +584,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
+                q->capacity = (long long) v * (long long) v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -698,10 +698,10 @@ int main(int argc, char *argv[]) {
 
                 quad_point* arr4 = malloc(sizeof(quad_point*));
                 arr4 = case_4d_randgen(seed, v);
-                for (int i = 0; i < v; i++)
+                /*for (int i = 0; i < v; i++)
                     for (int j = 0 ; j < i ; j++)
                         printf("%f\n", arr4[i].edges[j]);
-
+*/
                 boxes del;
 
                 float *final = malloc(v * sizeof(float));
@@ -718,7 +718,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
+                q->capacity = (long long) v * (long long) v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -729,7 +729,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr4[i].edges[row] < pow(2.178, (-0.001 * (float) v)) + 0.1)
+                            && arr4[i].edges[row] < pow(2.178, (-0.004 * (float) v)) + 0.4)
                         {
                             insert(q, arr4[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -747,7 +747,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr4[i].edges[row] < pow(2.178, (-0.001 * (float) v)) + 0.1)
+                            && arr4[i].edges[row] < pow(2.178, (-0.004 * (float) v)) + 0.4)
                         {
                             insert(q, arr4[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -757,7 +757,7 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr4[row].edges[j] < pow(2.178, (-0.001 * (float) v)) + 0.1)
+                            && arr4[row].edges[j] < pow(2.178, (-0.004 * (float) v)) + 0.4)
                         {
                             insert(q, arr4[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
