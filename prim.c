@@ -265,7 +265,7 @@ int main(int argc, char *argv[]) {
         // int num_trials = atoi(argv[3]);
         // float *trial_weight = malloc(num_trials * sizeof(float));
 
-        if (atoi(argv[4]) == 1)
+        if (atoi(argv[4]) == 0)
         {  
             // testing, testing
             int seed = atoi(argv[1]);
