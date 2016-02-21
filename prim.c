@@ -447,7 +447,11 @@ int main(int argc, char *argv[]) {
 
             for (int i = row + 1 ; i < v ; i++)
                 {
-                    if (arrayvis[i][row] == 1)
+
+                    // Our function, after testing, was .5 * e^(-.02n) + .135
+                    if (arrayvis[i][row] == 1
+                        && arr2[i].edges[row] < (pow(2.178, (-.02 * (float) v) * .5 + .135))
+                        )
                     {
                         insert(q, arr2[i].edges[row], i, row);
                         arrayvis[i][row] = 0;
@@ -464,7 +468,9 @@ int main(int argc, char *argv[]) {
 
                 for (int i = row + 1 ; i < v ; i++)
                 {
-                    if (arrayvis[i][row] == 1)
+                    if (arrayvis[i][row] == 1
+                        && arr2[i].edges[row] < (pow(2.178, (-.02 * (float) v) * .5 + .135))
+                        )
                     {
                         insert(q, arr2[i].edges[row], i, row);
                         arrayvis[i][row] = 0;
@@ -473,7 +479,9 @@ int main(int argc, char *argv[]) {
 
                 for (int j = col ; j < row ; j++)
                 {
-                    if (arrayvis[row][j] == 1)
+                    if (arrayvis[row][j] == 1
+                        && arr2[row].edges[j] < (pow(2.178, (-.02 * (float) v) * .5 + .135))
+                        )
                     {
                         insert(q, arr2[row].edges[j], row, j);
                         arrayvis[row][j] = 0;
@@ -495,7 +503,7 @@ int main(int argc, char *argv[]) {
 
             free(q->weights);
             free(q);
-            for (int i = 0; i < v; i++)
+            for (int i = 1; i < v; i++)
             {
                 free(arrayvis[i]);
             }
@@ -595,7 +603,7 @@ int main(int argc, char *argv[]) {
 
             free(q->weights);
             free(q);
-            for (int i = 0; i < v; i++)
+            for (int i = 1; i < v; i++)
             {
                 free(arrayvis[i]);
             }
@@ -695,7 +703,7 @@ int main(int argc, char *argv[]) {
 
             free(q->weights);
             free(q);
-            for (int i = 0; i < v; i++)
+            for (int i = 1; i < v; i++)
             {
                 free(arrayvis[i]);
             }
