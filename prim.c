@@ -122,10 +122,10 @@ float euc_dist_4d (quad_point a, quad_point b) {
 
 quad_point* case_4d_randgen (int seed, int v)
 {
-    if (seed == 0)
-        srand(time(NULL));
-    else
-        srand(seed);
+    // if (seed == 0)
+    //     srand(time(NULL));
+    // else
+    //     srand(seed);
 
     quad_point* array = malloc(v * sizeof(quad_point));
 
@@ -728,102 +728,160 @@ int main(int argc, char *argv[]) {
 
         if (atoi(argv[4]) == 4)
         {   
+            // testing, testing
             int seed = atoi(argv[1]);
+            if (seed == 0)
+            srand(time(NULL));
+            else
+            srand(seed);
 
-            int v = atoi(argv[2]);
+            int num_trials = atoi(argv[3]);
+            float *trial_weight = malloc(num_trials * sizeof(float));
 
-            quad_point* arr4 = malloc(sizeof(quad_point*));
-            arr4 = case_4d_randgen(seed, v);
-            for (int i = 0; i < v; i++)
-                for (int j = 0 ; j < i ; j++)
-                    printf("%f\n", arr4[i].edges[j]);
-
-            boxes del;
-
-            float *final = malloc(v * sizeof(float));
-            int size = 0;
-
-            int** arrayvis = malloc(v * sizeof(int*));
-                for (int i = 1; i < v; i++)
-                {
-                    arrayvis[i] = malloc(i * sizeof(int));
-                    for (int j = 0 ; j < i ; j++)
-                        arrayvis[i][j] = 1;
-                }
-
-            Priqu *q = malloc(sizeof(Priqu));
-
-            q->weights = malloc((v * v / 2) * sizeof(boxes));
-            q->capacity = v * v;
-            q->size = 0;
-            // initial value isn't used, assign it -1 so no value is ever smaller
-            q->weights[0].value = -1;
-
-            int row = 0;
-            int col = 0;
-
-            for (int i = row + 1 ; i < v ; i++)
-                {
-                    if (arrayvis[i][row] == 1)
-                    {
-                        insert(q, arr4[i].edges[row], i, row);
-                        arrayvis[i][row] = 0;
-                    }
-                }
-
-            while (size < v - 1)
+            for (int trials = 0 ; trials < num_trials ; trials++)
             {
-                del = deletemin(q);
-                final[size] = del.value;
-                size++;
-                row = del.row;
-                col = del.col;
+                // int seed = atoi(argv[1]);
+
+                int v = atoi(argv[2]);
+
+                quad_point* arr4 = malloc(sizeof(quad_point*));
+                arr4 = case_4d_randgen(seed, v);
+                for (int i = 0; i < v; i++)
+                    for (int j = 0 ; j < i ; j++)
+                        printf("%f\n", arr4[i].edges[j]);
+
+                boxes del;
+
+                float *final = malloc(v * sizeof(float));
+                int size = 0;
+
+                int** arrayvis = malloc(v * sizeof(int*));
+                    for (int i = 1; i < v; i++)
+                    {
+                        arrayvis[i] = malloc(i * sizeof(int));
+                        for (int j = 0 ; j < i ; j++)
+                            arrayvis[i][j] = 1;
+                    }
+
+                Priqu *q = malloc(sizeof(Priqu));
+
+                q->weights = malloc((v * v / 2) * sizeof(boxes));
+                q->capacity = v * v;
+                q->size = 0;
+                // initial value isn't used, assign it -1 so no value is ever smaller
+                q->weights[0].value = -1;
+
+                int row = 0;
+                int col = 0;
 
                 for (int i = row + 1 ; i < v ; i++)
-                {
-                    if (arrayvis[i][row] == 1)
                     {
-                        insert(q, arr4[i].edges[row], i, row);
-                        arrayvis[i][row] = 0;
+                        if (arrayvis[i][row] == 1)
+                        {
+                            insert(q, arr4[i].edges[row], i, row);
+                            arrayvis[i][row] = 0;
+                        }
+                    }
+
+                while (size < v - 1)
+                {
+                    del = deletemin(q);
+                    final[size] = del.value;
+                    size++;
+                    row = del.row;
+                    col = del.col;
+
+                    for (int i = row + 1 ; i < v ; i++)
+                    {
+                        if (arrayvis[i][row] == 1)
+                        {
+                            insert(q, arr4[i].edges[row], i, row);
+                            arrayvis[i][row] = 0;
+                        }
+                    }
+
+                    for (int j = col ; j < row ; j++)
+                    {
+                        if (arrayvis[row][j] == 1)
+                        {
+                            insert(q, arr4[row].edges[j], row, j);
+                            arrayvis[row][j] = 0;
+                        }
                     }
                 }
 
-                for (int j = col ; j < row ; j++)
+                // float sum = 0;
+
+                // printf("our MST: ");
+                // for(int k = 0 ; k < v - 1 ; k ++)
+                // {
+                //     sum += final[k];
+                //     printf("%f | ", final[k]);
+                // }
+                // printf("\n");
+
+                // printf("our tree weight: %f\n", sum);
+
+                // free(q->weights);
+                // free(q);
+                // for (int i = 0; i < v; i++)
+                // {
+                //     free(arrayvis[i]);
+                // }
+                // free(arrayvis);
+
+                // for (int i = 1; i < v; i++)
+                // {
+                //     free(arr4[i].edges);
+                // }
+                // free(arr4);
+                // free(final);
+
+                float sum = 0;
+
+                printf("our MST: ");
+                for(int k = 0 ; k < v - 1 ; k ++)
                 {
-                    if (arrayvis[row][j] == 1)
-                    {
-                        insert(q, arr4[row].edges[j], row, j);
-                        arrayvis[row][j] = 0;
-                    }
+                    sum += final[k];
+                    printf("%f | ", final[k]);
                 }
+                printf("\n");
+
+                printf("our tree weight: %f\n", sum);
+
+                trial_weight[trials] = sum;
+
+                free(q->weights);
+                free(q);
+
+                // problems freeing
+                for (int i = 1; i < v; i++)
+                {
+                    free(arrayvis[i]);
+                }
+                free(arrayvis);
+
+                // problems freeing
+                for (int i = 1; i < v; i++)
+                {
+                    free(arr4[i].edges);
+                }
+                free(arr4);
+                free(final);
             }
 
-            float sum = 0;
+            float total_weight;
 
-            printf("our MST: ");
-            for(int k = 0 ; k < v - 1 ; k ++)
+            for (int k = 0 ; k < num_trials ; k++)
             {
-                sum += final[k];
-                printf("%f | ", final[k]);
+                total_weight += trial_weight[k];
             }
-            printf("\n");
 
-            printf("our tree weight: %f\n", sum);
+            float average_weight = (total_weight / (float) num_trials);
 
-            free(q->weights);
-            free(q);
-            for (int i = 0; i < v; i++)
-            {
-                free(arrayvis[i]);
-            }
-            free(arrayvis);
+            printf("our average weight is: %f\n", average_weight);
 
-            for (int i = 1; i < v; i++)
-            {
-                free(arr4[i].edges);
-            }
-            free(arr4);
-            free(final);
+            free(trial_weight);
         }
     }
     else
