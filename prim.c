@@ -460,7 +460,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) * 0.5 + 0.135)
+                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                         {
                             insert(q, arr2[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -478,7 +478,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) * 0.5 + 0.135)
+                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                         {
                             insert(q, arr2[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -488,40 +488,13 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr2[row].edges[j] < pow(2.178, (-0.02 * (float) v)) * 0.5 + 0.135)
+                            && arr2[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                         {
                             insert(q, arr2[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
                         }
                     }
                 }
-
-                // float sum = 0;
-
-                // printf("our MST: ");
-                // for(int k = 0 ; k < v - 1 ; k ++)
-                // {
-                //     sum += final[k];
-                //     printf("%f | ", final[k]);
-                // }
-                // printf("\n");
-
-                // printf("our tree weight: %f\n", sum);
-
-                // free(q->weights);
-                // free(q);
-                // for (int i = 1; i < v; i++)
-                // {
-                //     free(arrayvis[i]);
-                // }
-                // free(arrayvis);
-                // //figure out how to free this
-                // for (int i = 1; i < v; i++)
-                // {
-                //     free(arr2[i].edges);
-                // }
-                // free(arr2);
-                // free(final);
 
                 float sum = 0;
 
@@ -655,33 +628,6 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                // float sum = 0;
-
-                // printf("our MST: ");
-                // for(int k = 0 ; k < v - 1 ; k ++)
-                // {
-                //     sum += final[k];
-                //     printf("%f | ", final[k]);
-                // }
-                // printf("\n");
-
-                // printf("our tree weight: %f\n", sum);
-
-                // free(q->weights);
-                // free(q);
-                // for (int i = 0; i < v; i++)
-                // {
-                //     free(arrayvis[i]);
-                // }
-                // free(arrayvis);
-
-                // for (int i = 1; i < v; i++)
-                // {
-                //      free(arr3[i].edges);
-                // }
-                // free(arr3);
-                // free(final);
-
                 float sum = 0;
 
                 printf("our MST: ");
@@ -812,34 +758,6 @@ int main(int argc, char *argv[]) {
                         }
                     }
                 }
-
-                // float sum = 0;
-
-                // printf("our MST: ");
-                // for(int k = 0 ; k < v - 1 ; k ++)
-                // {
-                //     sum += final[k];
-                //     printf("%f | ", final[k]);
-                // }
-                // printf("\n");
-
-                // printf("our tree weight: %f\n", sum);
-
-                // free(q->weights);
-                // free(q);
-                // for (int i = 0; i < v; i++)
-                // {
-                //     free(arrayvis[i]);
-                // }
-                // free(arrayvis);
-
-                // for (int i = 1; i < v; i++)
-                // {
-                //     free(arr4[i].edges);
-                // }
-                // free(arr4);
-                // free(final);
-
                 float sum = 0;
 
                 printf("our MST: ");
