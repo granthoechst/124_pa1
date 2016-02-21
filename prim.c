@@ -23,8 +23,8 @@ typedef struct boxes {
 
 // creating my priority queue struct
 typedef struct Priqu {
-    long long size;
-    long long capacity;
+    size_t size;
+    size_t capacity;
     boxes *weights;
 } Priqu ;
 
@@ -308,7 +308,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = (long long) v * (long long) v;
+                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -449,7 +449,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = (long long) v * (long long) v;
+                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -584,7 +584,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = (long long) v * (long long) v;
+                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -718,7 +718,7 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = (long long) v * (long long) v;
+                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
