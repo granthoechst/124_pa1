@@ -205,15 +205,6 @@ void insert(Priqu *q, float val, int ro, int co) {
     
 
     sort(q);
-
-    // move up the value while it's smaller than its parent
-    // while(q->weights[i].value <= q->weights[PARENT(i)].value)
-    // {
-    //     temp = q->weights[i];
-    //     q->weights[i] = q->weights[PARENT(i)];
-    //     q->weights[PARENT(i)] = temp;
-    //     i = PARENT(i);
-    // }
 };
 
 // return a pointer to the edge
@@ -365,7 +356,9 @@ int main(int argc, char *argv[]) {
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    printf("%f | ", final[k]);
+                    // If you'd like to print out the edges of the MST,
+                    // uncomment below
+                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -460,7 +453,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
+                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                         {
                             insert(q, arr2[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -478,7 +471,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
+                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                         {
                             insert(q, arr2[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -488,7 +481,7 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr2[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.135)
+                            && arr2[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                         {
                             insert(q, arr2[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
@@ -502,7 +495,9 @@ int main(int argc, char *argv[]) {
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    printf("%f | ", final[k]);
+                    // If you'd like to print out the edges of the MST,
+                    // uncomment below
+                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -595,7 +590,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr3[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.3)
+                            && arr3[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                         {
                             insert(q, arr3[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -613,7 +608,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr3[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.3)
+                            && arr3[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                         {
                             insert(q, arr3[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -623,7 +618,7 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr3[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.3)
+                            && arr3[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                         {
                             insert(q, arr3[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
@@ -637,7 +632,9 @@ int main(int argc, char *argv[]) {
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    printf("%f | ", final[k]);
+                    // If you'd like to print out the edges of the MST,
+                    // uncomment below
+                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -729,7 +726,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr4[i].edges[row] < pow(2.178, (-0.008 * (float) v)) + 0.4)
+                            && arr4[i].edges[row] < pow(2.178, (-0.004 * (float) v)) + 0.2)
                         {
                             insert(q, arr4[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -747,7 +744,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr4[i].edges[row] < pow(2.178, (-0.008 * (float) v)) + 0.4)
+                            && arr4[i].edges[row] < pow(2.178, (-0.004 * (float) v)) + 0.2)
                         {
                             insert(q, arr4[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -757,7 +754,7 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr4[row].edges[j] < pow(2.178, (-0.008 * (float) v)) + 0.4)
+                            && arr4[row].edges[j] < pow(2.178, (-0.004 * (float) v)) + 0.2)
                         {
                             insert(q, arr4[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
@@ -770,7 +767,9 @@ int main(int argc, char *argv[]) {
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    printf("%f | ", final[k]);
+                    // If you'd like to print out the edges of the MST,
+                    // uncomment below
+                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
