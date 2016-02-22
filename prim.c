@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 
 // for accessing specific elements in our tree
 #define LEFT(x) (2 * x)
@@ -186,9 +187,6 @@ void sort(Priqu *q)
 
 // adding elements to the queue, takes in the queue and the value
 void insert(Priqu *q, float val, int ro, int co) {
-    // need a variable of size_t and a pointer
-    boxes temp;
-    
     // increment the size
     q->size++;
     // put the new value at the end of the queue
