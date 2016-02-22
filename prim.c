@@ -1,3 +1,4 @@
+// Will Deuschle and Grant Hoechst
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
