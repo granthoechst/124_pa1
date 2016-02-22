@@ -24,7 +24,6 @@ typedef struct boxes {
 // creating my priority queue struct
 typedef struct Priqu {
     size_t size;
-    size_t capacity;
     boxes *weights;
 } Priqu ;
 
@@ -190,12 +189,7 @@ void sort(Priqu *q)
 void insert(Priqu *q, float val, int ro, int co) {
     // need a variable of size_t and a pointer
     boxes temp;
-    // don't operate if our queue is full
-    if (q->size + 1 > q->capacity)
-    {
-        printf("The priority queue is full!\n");
-        return;
-    }
+    
     // increment the size
     q->size++;
     // put the new value at the end of the queue
@@ -299,7 +293,6 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -442,7 +435,6 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -579,7 +571,6 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
@@ -715,7 +706,6 @@ int main(int argc, char *argv[]) {
                 Priqu *q = malloc(sizeof(Priqu));
 
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
-                q->capacity = v * v;
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
                 q->weights[0].value = -1;
