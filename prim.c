@@ -509,7 +509,7 @@ int main(int argc, char *argv[]) {
                 free(final);
             }
 
-            float total_weight;
+            float total_weight = 0;
 
             for (int k = 0 ; k < num_trials ; k++)
             {
@@ -648,7 +648,7 @@ int main(int argc, char *argv[]) {
                 free(final);
             }
 
-            float total_weight;
+            float total_weight = 0;
 
             for (int k = 0 ; k < num_trials ; k++)
             {
@@ -785,7 +785,7 @@ int main(int argc, char *argv[]) {
                 free(final);
             }
 
-            float total_weight;
+            float total_weight = 0;
 
             for (int k = 0 ; k < num_trials ; k++)
             {
