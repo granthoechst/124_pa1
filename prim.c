@@ -367,12 +367,16 @@ int main(int argc, char *argv[]) {
             }
             
         
-            float total_weight;
+            float total_weight = 0;
 
             for (int k = 0 ; k < num_trials ; k++)
             {
                 total_weight += trial_weight[k];
             }
+
+            printf("our total weight is %f\n", total_weight);
+            printf("num_trials is: %i\n", num_trials);
+            printf("float num_trials is %f\n", (float) num_trials);
 
             float average_weight = (total_weight / (float) num_trials);
 
