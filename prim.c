@@ -28,7 +28,7 @@ typedef struct Priqu {
 } Priqu ;
 
 
-//2D
+// 2D
 typedef struct tuple_point {
     float x;
     float y;
@@ -41,10 +41,6 @@ float euc_dist_2d (tuple_point a, tuple_point b) {
 
 tuple_point* case_2d_randgen (int seed, int v)
 {
-    // if (seed == 0)
-    //     srand(time(NULL));
-    // else
-    //     srand(seed);
 
     tuple_point* array = malloc(v * sizeof(tuple_point));
 
@@ -78,10 +74,6 @@ float euc_dist_3d (triple_point a, triple_point b) {
 
 triple_point* case_3d_randgen (int seed, int v)
 {
-    // if (seed == 0)
-    //     srand(time(NULL));
-    // else
-    //     srand(seed);
 
     triple_point* array = malloc(v * sizeof(triple_point));
 
@@ -121,10 +113,6 @@ float euc_dist_4d (quad_point a, quad_point b) {
 
 quad_point* case_4d_randgen (int seed, int v)
 {
-    // if (seed == 0)
-    //     srand(time(NULL));
-    // else
-    //     srand(seed);
 
     quad_point* array = malloc(v * sizeof(quad_point));
 
@@ -224,11 +212,6 @@ boxes deletemin(Priqu *q) {
 
 float** case_1_randgen (int seed, int v)
 {
-    // if (seed == 0)
-    //     srand(time(NULL));
-    // else
-    //     srand(seed);
-
     float** array = malloc(v * sizeof(float*));
 
     for (int i = 1 ; i < v ; i++)
@@ -283,12 +266,12 @@ int main(int argc, char *argv[]) {
                         printf("%f\n", arr[i][j]);
 */
                 int** arrayvis = malloc(v * sizeof(int*));
-                    for (int i = 1; i < v; i++)
-                    {
-                        arrayvis[i] = malloc(i * sizeof(int));
-                        for (int j = 0 ; j < i ; j++)
-                            arrayvis[i][j] = 1;
-                    }
+                for (int i = 1; i < v; i++)
+                {
+                    arrayvis[i] = malloc(i * sizeof(int));
+                    for (int j = 0 ; j < i ; j++)
+                        arrayvis[i][j] = 1;
+                }
 
                 Priqu *q = malloc(sizeof(Priqu));
 
@@ -301,18 +284,21 @@ int main(int argc, char *argv[]) {
                 int col = 0;
 
                 for (int i = row + 1 ; i < v ; i++)
+                {
+                    if ((arrayvis[i][row] == 1) 
+                        && arr[i][row] < (20.0/(float) v)
+                        )
                     {
-                        if ((arrayvis[i][row] == 1) 
-                            && arr[i][row] < (20.0/(float) v)
-                            )
-                        {
-                            insert(q, arr[i][row], i, row);
-                            arrayvis[i][row] = 0;
-                        }
+                        insert(q, arr[i][row], i, row);
+                        arrayvis[i][row] = 0;
                     }
+                }
 
                 while (size < v - 1)
                 {
+                    if (size % 1000 == 0)
+                        printf("%d\n", size);
+
                     del = deletemin(q);
                     final[size] = del.value;
                     size++;
@@ -425,12 +411,12 @@ int main(int argc, char *argv[]) {
                 int size = 0;
 
                 int** arrayvis = malloc(v * sizeof(int*));
-                    for (int i = 1; i < v; i++)
-                    {
-                        arrayvis[i] = malloc(i * sizeof(int));
-                        for (int j = 0 ; j < i ; j++)
-                            arrayvis[i][j] = 1;
-                    }
+                for (int i = 1; i < v; i++)
+                {
+                    arrayvis[i] = malloc(i * sizeof(int));
+                    for (int j = 0 ; j < i ; j++)
+                        arrayvis[i][j] = 1;
+                }
 
                 Priqu *q = malloc(sizeof(Priqu));
 
@@ -443,17 +429,20 @@ int main(int argc, char *argv[]) {
                 int col = 0;
 
                 for (int i = row + 1 ; i < v ; i++)
+                {
+                    if (arrayvis[i][row] == 1
+                        && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                     {
-                        if (arrayvis[i][row] == 1
-                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.05)
-                        {
-                            insert(q, arr2[i].edges[row], i, row);
-                            arrayvis[i][row] = 0;
-                        }
+                        insert(q, arr2[i].edges[row], i, row);
+                        arrayvis[i][row] = 0;
                     }
+                }
 
                 while (size < v - 1)
                 {
+                    if (size % 1000 == 0)
+                        printf("%d\n", size);
+
                     del = deletemin(q);
                     final[size] = del.value;
                     size++;
@@ -561,12 +550,12 @@ int main(int argc, char *argv[]) {
                 int size = 0;
 
                 int** arrayvis = malloc(v * sizeof(int*));
-                    for (int i = 1; i < v; i++)
-                    {
-                        arrayvis[i] = malloc(i * sizeof(int));
-                        for (int j = 0 ; j < i ; j++)
-                            arrayvis[i][j] = 1;
-                    }
+                for (int i = 1; i < v; i++)
+                {
+                    arrayvis[i] = malloc(i * sizeof(int));
+                    for (int j = 0 ; j < i ; j++)
+                        arrayvis[i][j] = 1;
+                }
 
                 Priqu *q = malloc(sizeof(Priqu));
 
@@ -579,17 +568,20 @@ int main(int argc, char *argv[]) {
                 int col = 0;
 
                 for (int i = row + 1 ; i < v ; i++)
+                {
+                    if (arrayvis[i][row] == 1
+                        && arr3[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
                     {
-                        if (arrayvis[i][row] == 1
-                            && arr3[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.135)
-                        {
-                            insert(q, arr3[i].edges[row], i, row);
-                            arrayvis[i][row] = 0;
-                        }
+                        insert(q, arr3[i].edges[row], i, row);
+                        arrayvis[i][row] = 0;
                     }
+                }
 
                 while (size < v - 1)
                 {
+                    if (size % 1000 == 0)
+                        printf("%d\n", size);
+
                     del = deletemin(q);
                     final[size] = del.value;
                     size++;
@@ -696,12 +688,12 @@ int main(int argc, char *argv[]) {
                 int size = 0;
 
                 int** arrayvis = malloc(v * sizeof(int*));
-                    for (int i = 1; i < v; i++)
-                    {
-                        arrayvis[i] = malloc(i * sizeof(int));
-                        for (int j = 0 ; j < i ; j++)
-                            arrayvis[i][j] = 1;
-                    }
+                for (int i = 1; i < v; i++)
+                {
+                    arrayvis[i] = malloc(i * sizeof(int));
+                    for (int j = 0 ; j < i ; j++)
+                        arrayvis[i][j] = 1;
+                }
 
                 Priqu *q = malloc(sizeof(Priqu));
 
@@ -725,6 +717,9 @@ int main(int argc, char *argv[]) {
 
                 while (size < v - 1)
                 {
+                    if (size % 1000 == 0)
+                        printf("%d\n", size);
+
                     del = deletemin(q);
                     final[size] = del.value;
                     size++;
