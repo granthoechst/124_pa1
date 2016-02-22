@@ -7,6 +7,7 @@
 #define RIGHT(x) (2 * (x) + 1)
 #define PARENT(x) (2 / (x))
 
+// moving elements in the min_heap
 #define SWITCH(q, a, b) \
   do { \
     boxes temp = q->weights[a]; \
@@ -28,20 +29,22 @@ typedef struct Priqu {
 } Priqu ;
 
 
-// 2D
+// 2D stucture
 typedef struct tuple_point {
     float x;
     float y;
     float* edges;
 } tuple_point;
 
+
+// 2D calculation
 float euc_dist_2d (tuple_point a, tuple_point b) {
     return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2));
 }
 
+// 2D random generation
 tuple_point* case_2d_randgen (int seed, int v)
 {
-
     tuple_point* array = malloc(v * sizeof(tuple_point));
 
     array[0].x = (float) rand() / (float) RAND_MAX;
@@ -60,6 +63,7 @@ tuple_point* case_2d_randgen (int seed, int v)
     return array;
 }
 
+// 3D structure
 typedef struct triple_point {
     float x;
     float y;
@@ -67,11 +71,13 @@ typedef struct triple_point {
     float* edges;
 } triple_point;
 
+// 3D calculation
 float euc_dist_3d (triple_point a, triple_point b) {
     return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2) + 
                 pow((a.z - b.z), 2));
 }
 
+// 3D random generation
 triple_point* case_3d_randgen (int seed, int v)
 {
 
@@ -95,9 +101,7 @@ triple_point* case_3d_randgen (int seed, int v)
     return array;
 }
 
-
-//4D
-
+// 4D structure
 typedef struct quad_point {
     float x;
     float y;
@@ -106,14 +110,15 @@ typedef struct quad_point {
     float* edges;
 } quad_point;
 
+// 4D calculation
 float euc_dist_4d (quad_point a, quad_point b) {
     return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2) + 
                 pow((a.z - b.z), 2) + pow((a.w - b.w), 2));
 }
 
+// 4d random generation
 quad_point* case_4d_randgen (int seed, int v)
 {
-
     quad_point* array = malloc(v * sizeof(quad_point));
 
     array[0].x = (float) rand() / (float) RAND_MAX;
@@ -136,10 +141,10 @@ quad_point* case_4d_randgen (int seed, int v)
     return array;
 }
 
-
+// left to sort
 size_t todo;
 
-// to organize our heap
+// to be called when sorting our heap
 void min_heapify(Priqu *q, size_t index) {
     size_t left_index = LEFT(index);
     size_t right_index = RIGHT(index);
@@ -159,6 +164,7 @@ void min_heapify(Priqu *q, size_t index) {
     }
 };
 
+// sort the heap
 void sort(Priqu *q)
 {
     todo = q->size;
@@ -184,7 +190,6 @@ void insert(Priqu *q, float val, int ro, int co) {
     q->weights[q->size].value = val;
     q->weights[q->size].row = ro;
     q->weights[q->size].col = co;
-    
 
     sort(q);
 };
@@ -210,6 +215,7 @@ boxes deletemin(Priqu *q) {
     return edge;
 };
 
+// random generation
 float** case_1_randgen (int seed, int v)
 {
     float** array = malloc(v * sizeof(float*));
@@ -230,28 +236,20 @@ float** case_1_randgen (int seed, int v)
 int main(int argc, char *argv[]) {
     if (argc == 5)
     {
-        // int num_trials = atoi(argv[3]);
-        // float *trial_weight = malloc(num_trials * sizeof(float));
-
-        if (atoi(argv[4]) == 0)
-        {  
-            // testing, testing
-            int seed = atoi(argv[1]);
+        int seed = atoi(argv[1]);
             if (seed == 0)
             srand(time(NULL));
             else
             srand(seed);
 
-
+        if (atoi(argv[4]) == 0)
+        {  
             int num_trials = atoi(argv[3]);
             float *trial_weight = malloc(num_trials * sizeof(float));
 
             for (int trials = 0 ; trials < num_trials ; trials++)
             {
-                // need the for loop to start here
                 boxes del;
-
-                // int seed = atoi(argv[1]);
 
                 int v = atoi(argv[2]);
 
@@ -261,10 +259,7 @@ int main(int argc, char *argv[]) {
                 // need to figure out how to randgen this better
                 float** arr = malloc(sizeof(float*));
                 arr = case_1_randgen(seed, v);
-                /*for (int i = 1; i < v; i++)
-                    for (int j = 0 ; j < i ; j++)
-                        printf("%f\n", arr[i][j]);
-*/
+
                 int** arrayvis = malloc(v * sizeof(int*));
                 for (int i = 1; i < v; i++)
                 {
@@ -328,16 +323,11 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-
                 float sum = 0;
 
-                printf("our MST: ");
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    // If you'd like to print out the edges of the MST,
-                    // uncomment below
-                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -348,22 +338,18 @@ int main(int argc, char *argv[]) {
                 free(q->weights);
                 free(q);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arrayvis[i]);
                 }
                 free(arrayvis);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arr[i]);
                 }
                 free(arr);
                 free(final);
-
-                // for loop should end here
             }
             
         
@@ -374,10 +360,6 @@ int main(int argc, char *argv[]) {
                 total_weight += trial_weight[k];
             }
 
-            printf("our total weight is %f\n", total_weight);
-            printf("num_trials is: %i\n", num_trials);
-            printf("float num_trials is %f\n", (float) num_trials);
-
             float average_weight = (total_weight / (float) num_trials);
 
             printf("our average weight is: %f\n", average_weight);
@@ -387,28 +369,16 @@ int main(int argc, char *argv[]) {
 
         if (atoi(argv[4]) == 2)
         {   
-            // testing, testing
-            int seed = atoi(argv[1]);
-            if (seed == 0)
-            srand(time(NULL));
-            else
-            srand(seed);
-
             int num_trials = atoi(argv[3]);
             float *trial_weight = malloc(num_trials * sizeof(float));
 
             for (int trials = 0 ; trials < num_trials ; trials++)
             {
-                // int seed = atoi(argv[1]);
-
                 int v = atoi(argv[2]);
 
                 tuple_point* arr2 = malloc(sizeof(tuple_point*));
                 arr2 = case_2d_randgen(seed, v);
-                /*for (int i = 1; i < v; i++)
-                    for (int j = 0 ; j < i ; j++)
-                        printf("%f\n", arr2[i].edges[j]);
-*/
+
                 boxes del;
 
                 float *final = malloc(v * sizeof(float));
@@ -476,13 +446,9 @@ int main(int argc, char *argv[]) {
 
                 float sum = 0;
 
-                printf("our MST: ");
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    // If you'd like to print out the edges of the MST,
-                    // uncomment below
-                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -493,14 +459,12 @@ int main(int argc, char *argv[]) {
                 free(q->weights);
                 free(q);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arrayvis[i]);
                 }
                 free(arrayvis);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arr2[i].edges);
@@ -525,29 +489,17 @@ int main(int argc, char *argv[]) {
 
         if (atoi(argv[4]) == 3)
         {
-            // testing, testing
-            int seed = atoi(argv[1]);
-            if (seed == 0)
-            srand(time(NULL));
-            else
-            srand(seed);
-
             int num_trials = atoi(argv[3]);
             float *trial_weight = malloc(num_trials * sizeof(float));
 
 
             for (int trials = 0 ; trials < num_trials ; trials++)
             {   
-                // int seed = atoi(argv[1]);
-
                 int v = atoi(argv[2]);
 
                 triple_point* arr3 = malloc(sizeof(triple_point*));
                 arr3 = case_3d_randgen(seed, v);
-                /*for (int i = 1; i < v; i++)
-                    for (int j = 0 ; j < i ; j++)
-                        printf("%f\n", arr3[i].edges[j]);
-*/
+
                 boxes del;
 
                 float *final = malloc(v * sizeof(float));
@@ -619,9 +571,6 @@ int main(int argc, char *argv[]) {
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    // If you'd like to print out the edges of the MST,
-                    // uncomment below
-                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -632,14 +581,12 @@ int main(int argc, char *argv[]) {
                 free(q->weights);
                 free(q);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arrayvis[i]);
                 }
                 free(arrayvis);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arr3[i].edges);
@@ -664,28 +611,16 @@ int main(int argc, char *argv[]) {
 
         if (atoi(argv[4]) == 4)
         {   
-            // testing, testing
-            int seed = atoi(argv[1]);
-            if (seed == 0)
-            srand(time(NULL));
-            else
-            srand(seed);
-
             int num_trials = atoi(argv[3]);
             float *trial_weight = malloc(num_trials * sizeof(float));
 
             for (int trials = 0 ; trials < num_trials ; trials++)
             {
-                // int seed = atoi(argv[1]);
-
                 int v = atoi(argv[2]);
 
                 quad_point* arr4 = malloc(sizeof(quad_point*));
                 arr4 = case_4d_randgen(seed, v);
-                /*for (int i = 0; i < v; i++)
-                    for (int j = 0 ; j < i ; j++)
-                        printf("%f\n", arr4[i].edges[j]);
-*/
+
                 boxes del;
 
                 float *final = malloc(v * sizeof(float));
@@ -756,9 +691,6 @@ int main(int argc, char *argv[]) {
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
-                    // If you'd like to print out the edges of the MST,
-                    // uncomment below
-                    // printf("%f | ", final[k]);
                 }
                 printf("\n");
 
@@ -769,14 +701,12 @@ int main(int argc, char *argv[]) {
                 free(q->weights);
                 free(q);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arrayvis[i]);
                 }
                 free(arrayvis);
 
-                // problems freeing
                 for (int i = 1; i < v; i++)
                 {
                     free(arr4[i].edges);
