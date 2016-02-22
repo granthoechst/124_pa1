@@ -22,7 +22,7 @@ typedef struct boxes {
     int col;
 } boxes;
 
-// creating my priority queue struct
+// creating the priority queue struct
 typedef struct Priqu {
     size_t size;
     boxes *weights;
@@ -146,10 +146,12 @@ size_t todo;
 
 // to be called when sorting our heap
 void min_heapify(Priqu *q, size_t index) {
+    // accessing elements
     size_t left_index = LEFT(index);
     size_t right_index = RIGHT(index);
     size_t large = index;
 
+    // reordering
     if (left_index <= todo && q->weights[left_index].value > q->weights[large].value)
     {
         large = left_index;
@@ -167,11 +169,14 @@ void min_heapify(Priqu *q, size_t index) {
 // sort the heap
 void sort(Priqu *q)
 {
+    // size of operation
     todo = q->size;
 
+    // go down one side
     for (size_t i = todo / 2; i >= 1; i--)
         min_heapify(q, i);
 
+    // and the other
     for (size_t i = todo; i > 1; i--) {
         SWITCH(q, 1, i);
         todo--;
@@ -236,23 +241,29 @@ float** case_1_randgen (int seed, int v)
 int main(int argc, char *argv[]) {
     if (argc == 5)
     {
+        // seeding
         int seed = atoi(argv[1]);
             if (seed == 0)
             srand(time(NULL));
             else
             srand(seed);
 
+        // checking dimension
         if (atoi(argv[4]) == 0)
         {  
+            // number of trials
             int num_trials = atoi(argv[3]);
             float *trial_weight = malloc(num_trials * sizeof(float));
 
             for (int trials = 0 ; trials < num_trials ; trials++)
             {
+                // elements being deleted
                 boxes del;
 
+                // number of vertices
                 int v = atoi(argv[2]);
 
+                // min span tree
                 float *final = malloc(v * sizeof(float));
                 int size = 0;
 
@@ -260,6 +271,7 @@ int main(int argc, char *argv[]) {
                 float** arr = malloc(sizeof(float*));
                 arr = case_1_randgen(seed, v);
 
+                // remember what's been visited
                 int** arrayvis = malloc(v * sizeof(int*));
                 for (int i = 1; i < v; i++)
                 {
@@ -268,8 +280,10 @@ int main(int argc, char *argv[]) {
                         arrayvis[i][j] = 1;
                 }
 
+                // initialize priority queue
                 Priqu *q = malloc(sizeof(Priqu));
 
+                // edge weights
                 q->weights = malloc((v * v / 2) * sizeof(boxes));
                 q->size = 0;
                 // initial value isn't used, assign it -1 so no value is ever smaller
@@ -278,6 +292,7 @@ int main(int argc, char *argv[]) {
                 int row = 0;
                 int col = 0;
 
+                // inserting at the beginning
                 for (int i = row + 1 ; i < v ; i++)
                 {
                     if ((arrayvis[i][row] == 1) 
@@ -289,17 +304,21 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
+                // insert until we have all our min spanning tree
                 while (size < v - 1)
                 {
+                    // know where we are while running it
                     if (size % 1000 == 0)
                         printf("%d\n", size);
 
+                    // delte min element, store it
                     del = deletemin(q);
                     final[size] = del.value;
                     size++;
                     row = del.row;
                     col = del.col;
 
+                    // continue inserting
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
@@ -325,6 +344,7 @@ int main(int argc, char *argv[]) {
 
                 float sum = 0;
 
+                // get total tree weight
                 for(int k = 0 ; k < v - 1 ; k ++)
                 {
                     sum += final[k];
@@ -333,6 +353,7 @@ int main(int argc, char *argv[]) {
 
                 printf("our tree weight: %f\n", sum);
 
+                // store each trial's weight
                 trial_weight[trials] = sum;
 
                 free(q->weights);
@@ -352,7 +373,7 @@ int main(int argc, char *argv[]) {
                 free(final);
             }
             
-        
+            // average the weights
             float total_weight = 0;
 
             for (int k = 0 ; k < num_trials ; k++)
@@ -367,6 +388,7 @@ int main(int argc, char *argv[]) {
             free(trial_weight);
         }
 
+        // same procedure as above for 2D
         if (atoi(argv[4]) == 2)
         {   
             int num_trials = atoi(argv[3]);
@@ -405,7 +427,7 @@ int main(int argc, char *argv[]) {
                 for (int i = row + 1 ; i < v ; i++)
                 {
                     if (arrayvis[i][row] == 1
-                        && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.01)
+                        && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                     {
                         insert(q, arr2[i].edges[row], i, row);
                         arrayvis[i][row] = 0;
@@ -426,7 +448,7 @@ int main(int argc, char *argv[]) {
                     for (int i = row + 1 ; i < v ; i++)
                     {
                         if (arrayvis[i][row] == 1
-                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.01)
+                            && arr2[i].edges[row] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                         {
                             insert(q, arr2[i].edges[row], i, row);
                             arrayvis[i][row] = 0;
@@ -436,7 +458,7 @@ int main(int argc, char *argv[]) {
                     for (int j = col ; j < row ; j++)
                     {
                         if (arrayvis[row][j] == 1
-                            && arr2[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.01)
+                            && arr2[row].edges[j] < pow(2.178, (-0.02 * (float) v)) + 0.05)
                         {
                             insert(q, arr2[row].edges[j], row, j);
                             arrayvis[row][j] = 0;
@@ -487,6 +509,7 @@ int main(int argc, char *argv[]) {
             free(trial_weight);
         }
 
+        // same procedure as above for 3d
         if (atoi(argv[4]) == 3)
         {
             int num_trials = atoi(argv[3]);
@@ -609,6 +632,7 @@ int main(int argc, char *argv[]) {
             free(trial_weight);
         }
 
+        // same procedure as above for 4D
         if (atoi(argv[4]) == 4)
         {   
             int num_trials = atoi(argv[3]);
